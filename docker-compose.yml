@@ -2,7 +2,7 @@ version: '2.4'
 services:
   web:
     build: .
-    image: olkitu/docker-laravel-template
+    image: olkitu/docker-laravel-project-template
     ports:
     - 8080:80
     env_file: .env
