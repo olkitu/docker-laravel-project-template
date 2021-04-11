@@ -1,0 +1,4 @@
+*.sql
+*.sql.gz
+*.sql.xz
+*.sh

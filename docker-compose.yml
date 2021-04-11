@@ -1,0 +1,35 @@
+version: '2.4'
+services:
+  web:
+    build: .
+    image: olkitu/docker-laravel-template
+    ports:
+    - 8080:80
+    env_file: .env
+    volumes:
+    - ./app:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy 
+  db:
+    image: mariadb:10.5
+    env_file: .env
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+    - ./sql:/docker-entrypoint-initdb.d
+    - /var/www/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1
+  phpmyadmin:
+    image: phpmyadmin
+    env_file: .env
+    environment:
+      PMA_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy 
+    
