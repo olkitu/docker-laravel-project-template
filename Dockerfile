@@ -1,9 +1,7 @@
-ARG PHP_VERSION
-
 FROM composer as composer
 
 # Base: https://hub.docker.com/r/olkitu/docker-nginx-php-fpm
-FROM olkitu/docker-nginx-php-fpm:${PHP_VERSION} as base
+FROM olkitu/docker-nginx-php-fpm:7.4 as base
 
 ENV APP_NAME=laravel \
     APP_ENV=local \
