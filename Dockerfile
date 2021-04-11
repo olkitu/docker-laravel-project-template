@@ -1,6 +1,6 @@
-FROM composer as composer
+ARG PHP_VERSION
 
-ENV PHP_VERSION=7.4
+FROM composer as composer
 
 # Base: https://hub.docker.com/r/olkitu/docker-nginx-php-fpm
 FROM olkitu/docker-nginx-php-fpm:${PHP_VERSION} as base
