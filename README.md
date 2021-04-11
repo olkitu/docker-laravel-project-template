@@ -10,7 +10,7 @@ Clone repository to your local computer
 
 ```
 git clone https://github.com/olkitu/docker-laravel-project-template.git
-cd docker-php-project-example
+cd docker-laravel-project-template
 ```
 
 Start with `docker-compose` Nginx, PHP-FPM and MariaDB database up.
