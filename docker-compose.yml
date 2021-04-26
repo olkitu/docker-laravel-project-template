@@ -1,10 +1,28 @@
 version: '2.4'
 services:
-  web:
-    build: .
-    image: olkitu/docker-laravel-project-template
+  loadbalancer:
+    image: traefik:2.4
     ports:
-    - 8080:80
+    - 80:80
+    - 8080:8080
+    command:
+    - "--api.dashboard=true"
+    - "--api.insecure=true"
+    - "--providers.docker=true"
+    - "--entrypoints.web.address=:80"
+    - "--providers.docker.exposedbydefault=false"
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    depends_on:
+    - laravel
+    - laravel.minio
+  
+  laravel:
+    image: olkitu/docker-laravel-project-template
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.laravel.rule=Host(`laravel.localhost`)"
+      - "traefik.http.routers.laravel.entrypoints=web"
     env_file: .env
     volumes:
     - ./app:/var/www/html
@@ -14,6 +32,8 @@ services:
   db:
     image: mariadb:10.5
     env_file: .env
+    ports:
+    - 3306:3306
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -24,6 +44,38 @@ services:
     - /var/www/mysql
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1
+
+  laravel.minio:
+    image: minio/minio
+    command: 'server /data'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.localhost`)"
+      - "traefik.http.routers.minio.entrypoints=web"
+    environment:
+      MINIO_ACCESS_KEY: ${AWS_ACCESS_KEY_ID}
+      MINIO_SECRET_KEY: ${AWS_SECRET_ACCESS_KEY}
+    volumes:
+    - /data
+    healthcheck:
+      test: curl -f http://localhost:9000/minio/health/live
+
+# On startup create bucket to Minio if not exist and setup public readonly access
+  create_bucket:
+    image: minio/mc
+    env_file: .env
+    entrypoint: >
+      /bin/sh -c '
+      /usr/bin/mc config host add s3 http://laravel.minio:9000 ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY} --api S3v4;
+      [[ ! -z "`/usr/bin/mc ls s3 | grep laravel`" ]] || /usr/bin/mc mb s3/laravel;
+      /usr/bin/mc policy set download s3/laravel/upload;
+      exit 0;
+      '
+    depends_on:
+      laravel.minio:
+        condition: service_healthy
+
+# Optionally acess to database vian browser
   phpmyadmin:
     image: phpmyadmin
     env_file: .env
