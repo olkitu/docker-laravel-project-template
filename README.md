@@ -24,15 +24,15 @@ docker-compose up -d
 Create new Laravel project and install to `./app` directory.
 
 ```
-docker-compose exec web composer create-project laravel/laravel .
+docker-compose exec laravel composer create-project laravel/laravel .
 ```
 
-Copy `app/.env` and `app/.env.example` to project root.
+Copy `app/.env` and `app/.env.example` to project root. Change the DB_HOST variable to db. 
 
-Restart the web container
+Restart the laravel container
 
 ```
-docker-compose restart web
+docker-compose restart laravel
 ```
 
 Now have fun start develop your own app.
@@ -42,15 +42,15 @@ Now have fun start develop your own app.
 Create new Lumen project and install to `./app` directory.
 
 ```
-docker-compose exec web composer create-project --prefer-dist laravel/lumen .
+docker-compose exec laravel composer create-project --prefer-dist laravel/lumen .
 ```
 
-Copy `app/.env` and `app/.env.example` to project root.
+Copy `app/.env` and `app/.env.example` to project root. Change the DB_HOST variable to db. 
 
-Restart the web container
+Restart the laravel container
 
 ```
-docker-compose restart web
+docker-compose restart laravel
 ```
 
 Now have fun start develop your own app.
@@ -60,7 +60,7 @@ Now have fun start develop your own app.
 Build your production image. Change `youraccount/project_name` to your own Docker Hub account name and project name what you like to use.
 
 ```
-docker build -t youraccount/project_name --target=prod .
+docker build -t youraccount/project_name .
 ```
 
 Upload your image to Docker Hub or some other container repository.
@@ -72,7 +72,7 @@ Here is example stack template to build to Docker Swarm.
 ```yaml
 version: '3.8'
 services:
-  web:
+  laravel:
     image: youraccount/project_name
     ports:
     - 80:80
