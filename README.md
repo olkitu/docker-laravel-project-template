@@ -13,7 +13,7 @@ git clone https://github.com/olkitu/docker-laravel-project-template.git
 cd docker-laravel-project-template
 ```
 
-Start with `docker-compose` Nginx, PHP-FPM and MariaDB database up.
+Start with `docker-compose` Nginx, PHP-FPM, Minio (S3-compatible file storage for persistent files) and Phpmyadmin
 
 ```
 docker-compose up -d

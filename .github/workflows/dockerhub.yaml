@@ -6,6 +6,10 @@ on:
     paths-ignore:
       - LICENSE
       - README.md
+      - Dockerfile
+      - Dockerfile.dev
+      - docker-compose.yml
+      - .env.example
   schedule:
   - cron: '0 0 */7 * *'
 

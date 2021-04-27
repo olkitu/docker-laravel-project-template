@@ -18,7 +18,9 @@ services:
     - laravel.minio
   
   laravel:
-    image: olkitu/docker-laravel-project-template
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.laravel.rule=Host(`laravel.localhost`)"
@@ -29,6 +31,8 @@ services:
     depends_on:
       db:
         condition: service_healthy 
+      laravel.minio:
+        condition: service_healthy
   db:
     image: mariadb:10.5
     env_file: .env
@@ -75,9 +79,13 @@ services:
       laravel.minio:
         condition: service_healthy
 
-# Optionally acess to database vian browser
+# Optionally access to database vian browser
   phpmyadmin:
     image: phpmyadmin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.laravel.rule=Host(`phpmyadmin.localhost`)"
+      - "traefik.http.routers.laravel.entrypoints=web"
     env_file: .env
     environment:
       PMA_HOST: db
