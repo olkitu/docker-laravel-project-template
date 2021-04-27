@@ -1,5 +1,7 @@
 FROM composer as composer
 
+LABEL maintainer="minh@truong.fi" 
+
 # Base: https://hub.docker.com/r/olkitu/docker-nginx-php-fpm
 FROM olkitu/docker-nginx-php-fpm:7.4 as base
 
