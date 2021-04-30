@@ -1,0 +1,29 @@
+FROM composer as composer
+
+LABEL maintainer="minh@truong.fi" 
+
+# https://hub.docker.com/_/php
+FROM php:7.4-apache
+
+ENV APP_NAME=laravel \
+    APP_ENV=local \
+    APP_URL=http://localhost \
+    DB_HOST=laravel \
+    DB_DATABASE=laravel \
+    DB_USERNAME=laravel \
+    DB_PASSWORD=laravel
+
+# Install required PHP packages
+RUN BUILD_PACKAGES='libmcrypt-dev libxml2-dev libonig-dev' \ 
+    && apt-get update && apt-get upgrade -y \
+    && apt-get install -y libmcrypt4 libxml2 $BUILD_PACKAGES \
+    && docker-php-ext-install -j$(nproc) mysqli pdo pdo_mysql tokenizer xml pcntl mbstring \
+    && apt-get purge -y $BUILD_PACKAGES \
+    && rm -rf /var/lib/apt/lists/* \
+    && a2enmod headers rewrite
+
+# Copy Apache configuration file
+COPY configs/apache-config.conf /etc/apache2/sites-enabled/000-default.conf
+
+# Install modules via composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer

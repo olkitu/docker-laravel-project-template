@@ -1,4 +1,6 @@
 # This is only for development use
+# By default we use Nginx+PHP-FPM but you can choose also Apache version
+# FROM olkitu/docker-laravel-project-template:apache
 FROM olkitu/docker-laravel-project-template:8.0
 
 RUN BUILD_PACKAGES='autoconf build-base' \

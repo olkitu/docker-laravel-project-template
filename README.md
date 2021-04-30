@@ -13,7 +13,7 @@ git clone https://github.com/olkitu/docker-laravel-project-template.git
 cd docker-laravel-project-template
 ```
 
-Start with `docker-compose` Nginx, PHP-FPM, Minio (S3-compatible file storage for persistent files) and Phpmyadmin
+Start with `docker-compose` Nginx, PHP-FPM, Minio (S3-compatible file storage for persistent files) and Phpmyadmin. To use apache-version, uncomment Apache instead, edit `Dockerfile.dev` and `Dockerfile`.
 
 ```
 docker-compose up -d
