@@ -9,9 +9,13 @@ Get Docker: https://docs.docker.com/get-docker/
 Clone repository to your local computer
 
 ```
-git clone https://github.com/olkitu/docker-laravel-project-template.git
-cd docker-laravel-project-template
+git clone https://github.com/olkitu/docker-laravel-project-template.git project_name
+cd project_name
 ```
+
+Delete `.git` directory and creat new repository in same directory `git init`.
+
+Copy `.env.example` to `.env`.
 
 Start with `docker-compose` Nginx, PHP-FPM, Minio (S3-compatible file storage for persistent files) and Phpmyadmin. To use apache-version, uncomment Apache instead, edit `Dockerfile.dev` and `Dockerfile`.
 
@@ -37,6 +41,8 @@ docker-compose restart laravel
 
 Now have fun start develop your own app.
 
+[More instructions](https://github.com/olkitu/docker-laravel-project-template/wiki)
+
 ### Install Lumen
 
 Create new Lumen project and install to `./app` directory.
@@ -54,6 +60,8 @@ docker-compose restart laravel
 ```
 
 Now have fun start develop your own app.
+
+[More instructions](https://github.com/olkitu/docker-laravel-project-template/wiki)
 
 ### Move exist Laravel/Lumen project to container
 
@@ -87,4 +95,9 @@ services:
       DB_DATABASE: laravel
       DB_USERNAME: laravel
       DB_PASSWORD: laravel
+      # And other environment variables
 ```
+
+## License
+
+[MIT](https://github.com/olkitu/docker-laravel-project-template/blob/main/LICENCE)
