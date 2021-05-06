@@ -33,6 +33,9 @@ services:
         condition: service_healthy 
       laravel.minio:
         condition: service_healthy
+    # Disable healthcheck on development environment
+    healthcheck:
+      disable: true
   db:
     image: mariadb:10.5
     env_file: .env
@@ -84,8 +87,8 @@ services:
     image: phpmyadmin
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.laravel.rule=Host(`phpmyadmin.localhost`)"
-      - "traefik.http.routers.laravel.entrypoints=web"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
+      - "traefik.http.routers.phpmyadmin.entrypoints=web"
     env_file: .env
     environment:
       PMA_HOST: db
