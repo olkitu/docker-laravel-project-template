@@ -1,6 +1,6 @@
 # Docker Laravel Project Template
 
-This is simple template image included basic PHP extensions and webserver configuration for Laravel/Lumen PHP projects.
+This is simple project template for developing Laravel and Lumen webapps with Docker. You just need Docker and IDE like [Visual Studio Code](https://code.visualstudio.com/) to start developing.
 
 ## Start develop Laravel/Lumen App
 
@@ -13,7 +13,7 @@ git clone https://github.com/olkitu/docker-laravel-project-template.git project_
 cd project_name
 ```
 
-Delete `.git` directory and creat new repository in same directory `git init`.
+Delete `.git` directory and create new repository in same directory `git init`.
 
 Copy `.env.example` to `.env`.
 
