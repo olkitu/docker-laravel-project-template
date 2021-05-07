@@ -6,14 +6,7 @@ This is simple project template for developing Laravel and Lumen webapps with Do
 
 Get Docker: https://docs.docker.com/get-docker/
 
-Clone repository to your local computer
-
-```
-git clone https://github.com/olkitu/docker-laravel-project-template.git project_name
-cd project_name
-```
-
-Delete `.git` directory and create new repository in same directory `git init`.
+Download the latest [release](https://github.com/olkitu/docker-laravel-project-template/releases/latest) and extract it.
 
 Copy `.env.example` to `.env`.
 
