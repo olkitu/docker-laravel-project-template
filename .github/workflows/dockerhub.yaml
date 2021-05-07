@@ -10,6 +10,8 @@ on:
       - Dockerfile.dev
       - docker-compose.yml
       - .env.example
+      - .env
+      - app/**
   schedule:
   - cron: '0 0 */7 * *'
 

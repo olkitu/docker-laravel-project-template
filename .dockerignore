@@ -3,3 +3,5 @@
 .gitlab-ci*.yml
 docker-compose*.yml
 vendor
+.env
+.env.example
