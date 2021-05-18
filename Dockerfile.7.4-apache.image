@@ -3,7 +3,7 @@ FROM composer as composer
 LABEL maintainer="minh@truong.fi" 
 
 # https://hub.docker.com/_/php
-FROM php:7.4-apache
+FROM php:7.3.27-apache
 
 ENV APP_NAME=laravel \
     APP_ENV=local \
